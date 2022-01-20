@@ -9,6 +9,7 @@ from fleetfmt.base import _FileAccessorBase
 import io
 
 import pyarrow as pa
+import pickle
 
 from .format import FILE_HEAD_SERDES, KEYENTRY_HEAD_SERDES, \
                     RECORD_HEAD_SERDES, SCHEMA_HEAD_SERDES
@@ -80,7 +81,8 @@ class FileReader(_FileAccessorBase):
         buf = self._fh.read(rsize)
 
         # deserialize using pyarrow
-        rec = pa.deserialize(buf)
+        # rec = pa.deserialize(buf)
+        rec = pickle.loads(buf)
 
         # return the non-key components of record
         return rec

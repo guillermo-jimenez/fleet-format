@@ -8,6 +8,7 @@ from fleetfmt.base import _FileAccessorBase
 
 import numpy as np
 import pyarrow as pa
+import pickle
 
 from .format import FILE_HEAD_SERDES, KEYENTRY_HEAD_SERDES, \
                     RECORD_HEAD_SERDES, SCHEMA_HEAD_SERDES
@@ -103,7 +104,8 @@ class FileWriter(_FileAccessorBase):
         loc = self._fh.tell()
 
         # serialize record and write to file
-        buf = pa.serialize(record).to_buffer()
+        # buf = pa.serialize(record).to_buffer()
+        buf = pickle.dumps(record,protocol=5)
         head = RECORD_HEAD_SERDES.to_bytes(buf.size)
         self._fh.write(head)
         self._fh.write(buf)
@@ -116,7 +118,8 @@ class FileWriter(_FileAccessorBase):
         # key table, to be written into the file header
         start_off = self._fh.tell()
 
-        kbuf = pa.serialize(self._keymap).to_buffer()
+        # kbuf = pa.serialize(self._keymap).to_buffer()
+        kbuf = pickle.dumps(self._keymap,protocol=5)
 
         self._fh.write(kbuf)
 
