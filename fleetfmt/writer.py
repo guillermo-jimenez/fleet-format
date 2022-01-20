@@ -118,7 +118,8 @@ class FileWriter(_FileAccessorBase):
         # key table, to be written into the file header
         start_off = self._fh.tell()
 
-        # kbuf = pa.serialize(self._keymap).to_buffer()
+        kbuf = pa.serialize(self._keymap).to_buffer()
+        print(kbuf.size,self._keymap)
         kbuf = pickle.dumps(self._keymap,protocol=5)
 
         self._fh.write(kbuf)
