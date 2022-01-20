@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="fleetfmt",
-    version="0.7.0",
+    version="0.7.1",
     author="Pure Storage",
     description="Fleet format file library",
     long_description=long_description,

@@ -95,7 +95,7 @@ class FileWriter(_FileAccessorBase):
 
     def _write_schema(self):
         sbuf = self._schema.serialize()
-        hbuf = SCHEMA_HEAD_SERDES.to_bytes(sbuf.size)
+        hbuf = SCHEMA_HEAD_SERDES.to_bytes(len(sbuf))
         self._fh.write(hbuf)
         self._fh.write(sbuf)
 
@@ -106,7 +106,7 @@ class FileWriter(_FileAccessorBase):
         # serialize record and write to file
         # buf = pa.serialize(record).to_buffer()
         buf = pickle.dumps(record,protocol=5)
-        head = RECORD_HEAD_SERDES.to_bytes(buf.size)
+        head = RECORD_HEAD_SERDES.to_bytes(len(buf))
         self._fh.write(head)
         self._fh.write(buf)
 
