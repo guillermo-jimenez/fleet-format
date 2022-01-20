@@ -7,6 +7,7 @@
 import io
 
 import pyarrow as pa
+import pickle
 
 from .format import FILE_HEAD_SERDES, KEYENTRY_HEAD_SERDES, \
                     RECORD_HEAD_SERDES, SCHEMA_HEAD_SERDES
@@ -60,6 +61,7 @@ class _FileAccessorBase:
 
         keymapser = self._fh.read()
         
-        keymapdes = pa.deserialize(keymapser)
+        # keymapdes = pa.deserialize(keymapser)
+        keymapdes = pickle.loads(keymapser)
 
         self._keymap = dict(keymapdes)

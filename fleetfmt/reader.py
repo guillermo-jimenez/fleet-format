@@ -95,4 +95,4 @@ class FileReader(_FileAccessorBase):
         # Odd -- pyarrow.read_schema wants a readable buffer, and a bytes
         # object is insufficient. So we wrap it back up to pull out the schema
         wrap = io.BufferedReader(io.BytesIO(buf))
-        self._schema = pa.read_schema(wrap)
+        self._schema = pa.ipc.read_schema(wrap)
