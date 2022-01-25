@@ -25,12 +25,15 @@ class FileReader(_FileAccessorBase):
     
 
     """
-    def __init__(self, fh):
+    def __init__(self, fh, keymap: dict = None, schema: pa.lib.Schema = None):
         super().__init__(fh)
-        self._keymap = None
+        self._keymap = keymap
         
         self._read_header()
-        self._read_schema()
+        if schema is not None:
+            self._schema = schema
+        else:
+            self._read_schema()
 
     def __enter__(self):
         return self
